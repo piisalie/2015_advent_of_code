@@ -1,27 +1,9 @@
 // 280;1797
 
 "use strict";
-var fs = require("fs");
+var fileUtils = require("../file_utils");
 
-var countFloors, readFile, sumMovements, findBasementMovement;
-
-countFloors = function (args, handler) {
-    if (args[2]) {
-        readFile(args[2], handler);
-    } else {
-        console.log("Usage: `node day_1.js INPUT_FILE_PATH`");
-    }
-};
-
-readFile = function (path, handler) {
-    fs.readFile(path, "utf-8", function (err, data) {
-        if (err) {
-            return console.log(err);
-        } else {
-            handler(data);
-        }
-    });
-};
+var sumMovements, findBasementMovement;
 
 sumMovements = function (data) {
     var ups, downs;
@@ -49,5 +31,5 @@ findBasementMovement = function (data) {
     }
 };
 
-countFloors(process.argv, sumMovements);
-countFloors(process.argv, findBasementMovement);
+fileUtils.readAndProcess(process.argv, sumMovements);
+fileUtils.readAndProcess(process.argv, findBasementMovement);
