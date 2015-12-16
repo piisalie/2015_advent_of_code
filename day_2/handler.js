@@ -1,16 +1,19 @@
 var handler = function (data) {
-    var total = 0;
+    var totalPaper = 0;
+    var totalRibbon = 0;
     var presents = lines(data);
 
     for (var i = 0, len = presents.length; i < len; i++) {
         // this is dumb hack because of how split handles
         // trailing new lines
         if (presents[i] != "") {
-            total += sqft(dimensions(presents[i]));
+            var present = dimensions(presents[i]);
+            totalPaper   += sqft(present);
+            totalRibbon  += ribbon(present);
         }
     }
 
-    return total;
+    return {sqft: totalPaper, ribbon: totalRibbon};
 };
 
 var lines = function (data) {
@@ -34,7 +37,18 @@ var sqft = function (present) {
     return ((s1 * 2) + (s2 * 2) + (s3 *2) + min)
 };
 
+var ribbon = function(present) {
+    var byValue = function ( a, b ) { return a - b };
+    var sides = [ present.l, present.w, present.h ].sort(byValue);
+    var bow = sides.reduce(function (a, b) {return a * b});
+    var s1 = sides.shift();
+    var s2 = sides.shift();
+
+    return (s1 + s1 + s2 + s2 + bow)
+}
+
 exports.handler    = handler;
 exports.lines      = lines;
 exports.dimensions = dimensions;
 exports.sqft       = sqft;
+exports.ribbon     = ribbon;

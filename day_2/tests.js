@@ -11,4 +11,8 @@ assert.equal(dimensions.h,   4, "build object with height");
 var present = { l: 2, w: 3, h: 4 };
 assert.equal(handler.sqft(present), 58, "calculates square footage of a single present");
 
-assert.equal(handler.handler("2x3x4\n1x1x10\n"), 101, "calculates square footage for multiple presents")
+var present2 = { l: 1, w: 1, h: 10};
+assert.equal(handler.ribbon(present2), 14, "calculates ribbon length");
+
+assert.equal(handler.handler("2x3x4\n1x1x10\n").sqft,   101, "calculates square footage for multiple presents")
+assert.equal(handler.handler("2x3x4\n1x1x10\n").ribbon, 48,  "calculates ribbon for multiple presents")
