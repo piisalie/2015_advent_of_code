@@ -1,14 +1,15 @@
 "use strict";
 
-var fileUtils, handler, String;
+var fileUtils, handler, String, String2;
 fileUtils = require("../file_utils");
-String = require("./string")
+String = require("./string");
+String2 = require("./string2");
 
 handler = function (data) {
     var lines = data
         .trim()
         .split("\n")
-        .map(String);
+        .map(String2);
 
     var count = 0;
 
